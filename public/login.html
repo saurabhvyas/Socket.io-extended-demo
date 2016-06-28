@@ -37,6 +37,7 @@
       
       console.log(msg);
       
+      $('#users').empty();
       
       
       msg.map((item)=>{
@@ -116,9 +117,9 @@
       }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      #second { background: grey; padding: 3px; position: fixed; bottom: 0; left:30%;  width: 70%; }
-      #second input { border: 0; padding: 10px; width: 70%; margin-right: .5%; }
-      #second button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #second {  padding: 3px; position: fixed; bottom: 0; left:30%;  width: 70%; }
+      #second input { border: 1px solid silver; padding: 10px; width: 70%; margin-right: .5%; }
+      #second button { width: 9%; background: deeppink;color:white; border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 15px 15px;  }
       #messages li:nth-child(odd) { background: #eee; }
