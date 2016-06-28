@@ -84,16 +84,40 @@
       #users{
         position:fixed;
         z-index:999;
-        background:black;
+        
         color:white;
-        width:100%;
+        width:27%;
+        
         
        
       }
+      
+      #loginbtn{
+        
+        width:30%;
+        padding:7px;
+        margin-bottom:10px;
+        
+        
+      }
+      
+      #sidebar{
+        height:900px;
+        
+        text-align:center;
+        
+        width:27%;
+        padding:10px;
+        background-color: deeppink;
+        color:white;
+        
+        
+        
+      }
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      #second { background: grey; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      #second input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #second { background: grey; padding: 3px; position: fixed; bottom: 0; left:30%;  width: 70%; }
+      #second input { border: 0; padding: 10px; width: 70%; margin-right: .5%; }
       #second button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 15px 15px;  }
@@ -108,17 +132,22 @@
 
   
   
- 
+ <div id="sidebar">
+   
     <form id="login" action="">
       
-      Nickname    <input type="text" id="name"/> 
-      <button>Login</button>
+     <h2> Nickname </h2>
+         <input type="text" id="name"/> 
+      <button id="loginbtn">Login</button>
    
       
     </form>
     <h2> Users Online </h2>
     
      <ul id="users"> </ul>
+     
+   </div>
+   
     <form id="second" action="">
       
      
