@@ -8,26 +8,117 @@ app.use(express.static('public'));
 
 var temp = require('socket.io');
 
+var activeusers=[];
+
 var io=temp(http);
+
+
+var clients=io.sockets.clients();
+console.log(clients);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname +'/public/login.html');
 });
 
 
-/* io.on('connection',(socket)=>{
+ io.on('connection',(socket)=>{
     
-     socket.broadcast.emit('hi a new socket joined');
+    // console.log(clients);
     
-})
+  
+    
+    
+    socket.on('chat message',(msg)=>{
+      
+      
+    //  console.log('current user socket id is' +socket.id);
+      //console.log('active user id is' + activeusers[0].id);
+      
+       var currentuser =  activeusers.filter((element,index)=>{
+     
+     if (element.id===socket.id){
+       
+       return true;
+     }
+     else{
+       return false;
+       
+     }
+   });
+   
+   
+   console.log('current user is ' + currentuser[0].nick);
+   
+    var currentusername=currentuser[0].nick;
+    
+         console.log(currentusername + ' ' + msg);
+         
+         io.emit('chat message',currentusername + ' : ' + msg);
+         
+      
+      
+    });
+    
+    
+    // when a new user will send its name for the first time
+     socket.on('name',(name)=>{
+  
+  
+  
+ if (  activeusers.indexOf(name) > -1 ) {
+  
+  // send a message he cant join
+  console.log('sorry a user with that name is already registered');
+  
+  
+  
+}
 
-*/
+else {
 
-var activeusers=[];
 
-var room_namespace=io.of('/room');
+   
+   
+   
+    
+   io.emit('chat message', name + ' has joined  ');
+  
+ //  console.log(name + ' has connected');
+  
+   activeusers.push({
+     
+     nick:name,
+     id:socket.id
+     
+   });
+  //console.log(' active users are now ' + activeusers);
+  //console.log(activeusers[0]);
+  
+  io.emit('online_users',activeusers);
+  console.log(name + ' has joined');
+  
+  
+}
+  
+ 
+  
+});
+  
+     
+     
+     
+     
+    
+});
 
-room_namespace.on('connection',(socket)=>{
+
+
+
+
+
+// var room_namespace=io.of('/room');
+
+/* room_namespace.on('connection',(socket)=>{
   
   
   
@@ -91,46 +182,13 @@ login_namespace.on('connection',(socket)=>{
   console.log('login test');
   
     
-socket.on('name',(name)=>{
-  
-  
-  
- if (  activeusers.indexOf(name) > -1 ) {
-  
-  // send a message he cant join
-  console.log('sorry a user with that name is already registered');
-  
-  
-  
-}
 
-else {
-  
-   io.of('/room').emit('chat message', name + ' has joined  ');
-  
- //  console.log(name + ' has connected');
-  
-   activeusers.push({
-     
-     nick:name,
-     id:socket.id
-     
-   });
-  //console.log(' active users are now ' + activeusers);
-  
-  console.log(name + ' has joined');
-  
-  
-}
   
  
   
 });
-  
-  
- 
-  
-});
+
+*/
 
 
 

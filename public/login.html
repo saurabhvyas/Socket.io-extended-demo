@@ -12,13 +12,50 @@
         
        
         
-       var socket = io.connect('/login');
+       var socket = io.connect();
+       
+       
+         $('#second').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    
+    
+    
+    return false;
+  }); 
   
-   $('form').submit(function(){
+  socket.on('chat message', function(msg){
+    console.log(msg);
+    
+    $('#messages').append($('<li>').text(msg));
+  });
+    
+    
+    socket.on('online_users',(msg)=>{
+      
+      
+      
+      
+      console.log(msg);
+      
+      
+      
+      msg.map((item)=>{
+        
+          $('#users').append($('<li>').text(item.nick));
+        
+      });
+      
+     //  $('#users').append($('<li>').text(msg));
+      
+    });   
+       
+       
+  
+   $('#login').submit(function(){
     // socket.emit('chat', $('#m').val());
   
     socket.emit('name',$('#name').val());
-    window.location.replace("./index2.html");
+   
     return false;
   }); 
   
@@ -32,19 +69,65 @@
 </script>
     <title>DevChat Login</title>
     <style>
+        
+      #name{
+        text-align:center;
+        width:80%;
+        height:30px;
+        margin-top:10px;
+        margin-bottom:10px;
+        margin-left:30px;
+        
+        
+      }
       
+      #users{
+        position:fixed;
+        z-index:999;
+        background:black;
+        color:white;
+        width:100%;
+        
+       
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      #second { background: grey; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      #second input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      #second button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 15px 15px;  }
+      #messages li:nth-child(odd) { background: #eee; }
+    
      
     </style>
   </head>
 
 
   <body>
-  Nickname  <input type="text" id="name"/> 
+
   
   
  
-    <form action="">
+    <form id="login" action="">
+      
+      Nickname    <input type="text" id="name"/> 
       <button>Login</button>
+   
+      
     </form>
+    <h2> Users Online </h2>
+    
+     <ul id="users"> </ul>
+    <form id="second" action="">
+      
+     
+      
+           <ul id="messages"></ul>
+             <input id="m" autocomplete="off" />
+      <button>Send</button>
+      
+      </form>
+      
   </body>
 </html>
