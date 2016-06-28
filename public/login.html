@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+
+       <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+      
+      
+      <script>
+    
+    $(document).ready(function(){
+        
+       
+        
+       var socket = io.connect('/login');
+  
+   $('form').submit(function(){
+    // socket.emit('chat', $('#m').val());
+  
+    socket.emit('name',$('#name').val());
+    window.location.replace("./index2.html");
+    return false;
+  }); 
+  
+
+
+
+        
+    });
+  
+  
+</script>
+    <title>DevChat Login</title>
+    <style>
+      
+     
+    </style>
+  </head>
+
+
+  <body>
+  Nickname  <input type="text" id="name"/> 
+  
+  
+ 
+    <form action="">
+      <button>Login</button>
+    </form>
+  </body>
+</html>
