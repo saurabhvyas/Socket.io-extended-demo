@@ -36,8 +36,18 @@ findcurrentuser=function(socket){
      }
    });
    
-   
-   return currentuser;
+   if (typeof currentuser[0] === undefined){
+     
+     throw {
+       name:'A User currently doesnt exist on the system ',
+       msg:'thaths why currentuser object is undefined'
+     }
+   }
+   else{
+     
+        return currentuser[0];
+   }
+
    
    
    
@@ -61,9 +71,41 @@ findcurrentuser=function(socket){
   
   socket.on('disconnect',()=>{
     
+    console.log(' current user is '+ findcurrentuser(socket));
     
     
-   var cur_nser_name=  findcurrentuser(socket)[0].nick;
+   try{
+         console.log('current username is ' + findcurrentuser(socket).nick);
+   } 
+   catch(e){
+     console.log('error ' + e);
+   }
+
+    
+    var activeusers_id=activeusers.map((item)=>{return {id:item.id}});
+    
+    var index = activeusers_id.indexOf(socket.id);
+    
+    activeusers.splice(index,1);
+    
+    
+  io.emit('online_users',activeusers);
+
+    
+    
+ //   console.log(' disconnected users socket is' + socket);
+    
+    try{
+      
+       var cur_nser_name=  findcurrentuser(socket).nick;
+       
+       
+    }
+    catch(e){
+      console.log('error ' + e);
+      
+    }
+  
     
       
       io.emit('chat message',' ' + cur_nser_name + ' got disconnected');
@@ -71,6 +113,9 @@ findcurrentuser=function(socket){
       // need to remove user from active users using array.splice
       
       
+     
+     
+     
       console.log('user disconnected');
       
       
@@ -86,7 +131,10 @@ findcurrentuser=function(socket){
       
        var currentuser =  activeusers.filter((element,index)=>{
      
-     if (element.id===socket.id){
+     
+     
+     
+     if (element.id === socket.id){
        
        return true;
      }
@@ -96,10 +144,25 @@ findcurrentuser=function(socket){
      }
    });
    
+   console.log(currentuser);
    
-   console.log('current user is ' + currentuser[0].nick);
+   //console.log('current user is ' + currentuser.map((item)=>{return item.nick}))[0];
+   
+   
+   try{
+      console.log('current user is ' + currentuser[0].nick);
    
     var currentusername=currentuser[0].nick;
+   }
+   catch(e){
+     console.log('name of error' + e.name);
+     console.log(' err message ' + e.message);
+     
+     
+     
+   }
+   
+  
     
          console.log(currentusername + ' ' + msg);
          
@@ -141,7 +204,8 @@ else {
      id:socket.id
      
    });
-  //console.log(' active users are now ' + activeusers);
+  console.log(' active users are now ' + activeusers.map((item)=>{return item.nick}));
+  
   //console.log(activeusers[0]);
   
   io.emit('online_users',activeusers);
