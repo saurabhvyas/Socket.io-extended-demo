@@ -14,18 +14,68 @@ var io=temp(http);
 
 
 var clients=io.sockets.clients();
-console.log(clients);
+// console.log(clients);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname +'/public/login.html');
 });
 
 
+findcurrentuser=function(socket){
+  
+  
+   var currentuser =  activeusers.filter((element,index)=>{
+     
+     if (element.id===socket.id){
+       
+       return true;
+     }
+     else{
+       return false;
+       
+     }
+   });
+   
+   
+   return currentuser;
+   
+   
+   
+}
+
  io.on('connection',(socket)=>{
     
     // console.log(clients);
     
+    socket.on('typing',(msg)=> {
+      
+      io.emit('typing',msg);
+      
+      
+    }
+    
+    
+    
+    
+  )
   
+  socket.on('disconnect',()=>{
+    
+    
+    
+   var cur_nser_name=  findcurrentuser(socket)[0].nick;
+    
+      
+      io.emit('chat message',' ' + cur_nser_name + ' got disconnected');
+      
+      // need to remove user from active users using array.splice
+      
+      
+      console.log('user disconnected');
+      
+      
+  })
+   
     
     
     socket.on('chat message',(msg)=>{

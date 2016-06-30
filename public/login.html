@@ -8,9 +8,16 @@
       
       <script>
     
+    
+    
     $(document).ready(function(){
         
+     var currentusername="";
+      
        
+       
+       
+      
         
        var socket = io.connect();
        
@@ -29,6 +36,11 @@
     $('#messages').append($('<li>').text(msg));
   });
     
+    socket.on('typing',(msg)=>{
+      
+      $('#typing').text(msg);
+      
+    });
     
     socket.on('online_users',(msg)=>{
       
@@ -54,17 +66,66 @@
   
    $('#login').submit(function(){
     // socket.emit('chat', $('#m').val());
+    
+      currentusername=$('#name').val();
   
     socket.emit('name',$('#name').val());
+    
+    
    
     return false;
   }); 
   
+ var occurrences=0;
+ 
+  
+      setInterval(function(){
+            
+           
+            
+            if(occurrences>0){
+             
+             socket.emit('typing',currentusername + ' is typing ');
+              
+              
+            }
+            else{
+              
+               socket.emit('typing', ' ');
+              
+              
+            }
+            
+             occurrences=0;
+            
+          },1000)
+          
 
 
-
+  changeevent = function(){
+          
+          occurrences++;
+         
+         // console.log(currentusername + ' is typing ..');
+          
+         // 
+          
+        //  $('#typing').text(currentusername + ' is typing .. ');
+          
+      
+          
+        }
+        
         
     });
+    
+    keyupevent = function(){
+      
+      
+      
+      
+     //  $('#typing').text('test');
+    }
   
   
 </script>
@@ -154,8 +215,10 @@
      
       
            <ul id="messages"></ul>
-             <input id="m" autocomplete="off" />
+             <input id="m" oninput="changeevent(event)"  autocomplete="off" />
       <button>Send</button>
+      
+      <p id="typing">  test  </p>
       
       </form>
       
