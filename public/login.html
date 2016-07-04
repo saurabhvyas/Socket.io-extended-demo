@@ -38,7 +38,10 @@
   socket.on('chat message', function(msg){
     console.log(msg);
     
-    $('#messages').append($('<li>').text(msg));
+   // $('#messages').append($('<li>').text(msg));
+   
+   $('#messages').append('<li > <img  class="user_thumb" src="user.png" > </img> ' + msg + '  </li>');
+   
   });
     
     socket.on('typing',(msg)=>{
@@ -62,6 +65,8 @@
             //   $('#users').append('<img  class="user_thumb" src="user.png" > </img>');
           $('#users').append($('<li>').text(item.nick).append(' <br> <img  class="user_thumb" src="user.png" > </img>'));
  
+ // $('#users').append('<li ><img  class="user_thumb" src="user.png" > </img>  ' + item.nick + '  </li>');
+  
       });
       
      //  $('#users').append($('<li>').text(msg));
