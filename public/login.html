@@ -59,8 +59,9 @@
       
       msg.map((item)=>{
         
-          $('#users').append($('<li>').text(item.nick));
-        
+            //   $('#users').append('<img  class="user_thumb" src="user.png" > </img>');
+          $('#users').append($('<li>').text(item.nick).append(' <br> <img  class="user_thumb" src="user.png" > </img>'));
+ 
       });
       
      //  $('#users').append($('<li>').text(msg));
@@ -136,6 +137,13 @@
 </script>
     <title>DevChat Login</title>
     <style>
+      
+      .user_thumb{
+        
+        width:30px;
+        height:30px;
+        
+      }
         
       #name{
         text-align:center;
@@ -143,7 +151,7 @@
         height:30px;
         margin-top:10px;
         margin-bottom:10px;
-        margin-left:30px;
+    
         
         
       }
@@ -157,6 +165,12 @@
         
         
        
+      }
+      #users li {
+        
+        display:inline-block; 
+        margin:10px;
+        
       }
       
       #loginbtn{
@@ -187,7 +201,7 @@
       #second input { border: 1px solid silver; padding: 10px; width: 70%; margin-right: .5%; }
       #second button { width: 9%; background: deeppink;color:white; border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 15px 15px;  }
+      #messages li { padding: 15px 15px; }
       #messages li:nth-child(odd) { background: #eee; }
     
      
